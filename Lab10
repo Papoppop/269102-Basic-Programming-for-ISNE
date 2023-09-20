@@ -1,0 +1,106 @@
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+float mean(int [], int);
+int median(int [], int);
+void bubbleSort(int [], int);
+int mode(int [], int);
+
+int main() {
+
+	const int responseSize = 99;
+	int response[responseSize] =
+		{	6,7,8,9,8,7,8,9,8,9,
+			7,8,9,5,9,8,7,8,7,8,
+			6,7,8,9,3,9,8,7,8,7,
+			7,8,9,8,9,8,9,7,8,9,
+			6,7,8,7,8,7,9,8,9,2,
+			7,8,9,8,9,8,9,7,5,3,
+			5,6,7,2,5,3,9,4,6,4,
+			7,8,9,6,8,7,8,9,7,8,
+			7,4,4,2,5,3,8,7,5,6,
+			4,5,6,1,6,5,7,8,7	};
+	
+	cout << "Mean = " << fixed << setprecision(2) << mean(response, responseSize) << endl;
+
+	for (int k=0; k< responseSize ;k++){
+		bubbleSort(response, responseSize);
+	}
+	
+	cout << "Median = " << median(response, responseSize) << endl;
+	
+	cout << "Mode = " << mode(response, responseSize) << endl;
+}
+
+float mean(int b[], int arraySize) {
+	
+		float sum;
+		
+		for (int i=0;i<arraySize;i++) {			
+			if (i==0) {
+				sum = b[i];
+			} else if (i > 0) {
+				sum += b[i]; 
+			}
+		}
+		
+		float avg;
+		
+		avg = sum/arraySize;
+		return avg;
+	}
+	
+void bubbleSort(int a[], int arraySize){
+	
+	int hold, swap;
+	do{
+		swap=0;
+		for (int j=0;j< arraySize-1;j++) {
+			if (a[j] > a[j+1]){
+				hold = a[j];
+				a[j] = a[j+1];
+				a[j+1] = hold;
+				swap = 1; //If there are any swaps
+			}
+		}
+	}while (swap == 1); //Keep sorting until there is no swap
+}
+
+int median(int c[], int arraySize) {
+	int med;
+	if (arraySize % 2 == 0) {
+		med = c[arraySize/2];
+	} else {
+		med = (c[arraySize/2] + c[arraySize/2])/2;
+	}
+	return med;
+}
+
+int mode(int d[], int arraySize)
+{
+    
+        int counter = 1; // Let the counter be 1
+        int max = 0;
+        int mode = d[0];
+        
+        for (int pass = 0; pass < arraySize - 1; pass++) { 	// The reason why arraySize has to be minus 1 
+															//	is that the d[pass+1] will not cause an error.
+           if ( d[pass] == d[pass+1] ) { // If the first value equals to the next value...
+              counter++;	// Let the counter plus itself
+              if ( counter > max ) { 	// If the counter is more than the maximum,
+              							// since we annnounced that max=0 which is lower than 1 in the first place, this will be true
+                  max = counter;
+                  mode = d[pass];
+              }
+           } else
+              counter = 1; // reset counter.
+        }
+    return mode;
+}
+
+
+
+
+
